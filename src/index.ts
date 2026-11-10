@@ -19,3 +19,33 @@ export { amortizationSchedule } from './amortization';
 export type { AmortizationParams, AmortizationRow } from './amortization';
 
 export { effectiveRate, nominalRate } from './rates';
+
+// --- Advanced ---
+
+export { yearFraction } from './daycount';
+export type { DayCountConvention } from './daycount';
+
+export { xnpv, xirr } from './dated';
+export type { DatedCashFlow, XirrOptions } from './dated';
+
+export {
+  bondPrice,
+  yieldToMaturity,
+  macaulayDuration,
+  modifiedDuration,
+  convexity,
+  accruedInterest,
+} from './bonds';
+export type { Bond, YieldOptions, AccruedInterestParams } from './bonds';
+
+export { sln, syd, ddb, db } from './depreciation';
+
+export { mirr, cagr, twr } from './returns';
+export type { ValuationPeriod } from './returns';
+
+export {
+  pvPerpetuity,
+  pvGrowingPerpetuity,
+  pvGrowingAnnuity,
+  fvGrowingAnnuity,
+} from './perpetuity';
