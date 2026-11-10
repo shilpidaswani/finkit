@@ -2,6 +2,9 @@
 
 [![npm version](https://img.shields.io/npm/v/finlytic.svg)](https://www.npmjs.com/package/finlytic)
 [![CI](https://github.com/shilpidaswani/finkit/actions/workflows/ci.yml/badge.svg)](https://github.com/shilpidaswani/finkit/actions/workflows/ci.yml)
+[![downloads](https://img.shields.io/npm/dm/finlytic.svg)](https://www.npmjs.com/package/finlytic)
+[![minzipped size](https://img.shields.io/bundlephobia/minzip/finlytic)](https://bundlephobia.com/package/finlytic)
+[![zero dependencies](https://img.shields.io/badge/dependencies-0-brightgreen)](https://www.npmjs.com/package/finlytic?activeTab=dependencies)
 [![license](https://img.shields.io/npm/l/finlytic.svg)](./LICENSE)
 [![types](https://img.shields.io/npm/types/finlytic.svg)](./dist/index.d.ts)
 
@@ -21,6 +24,25 @@ cases most implementations get wrong.
 - **Correct edge cases**: zero-interest loans, annuity-due (begin-of-period)
   payments, balloon residuals, amortization schedules that end at exactly
   zero, `rate === growth` limits, and time-zone-independent day counts.
+
+## Why finlytic?
+
+Most JavaScript finance libraries are either a thin set of time-value-of-money
+helpers or a sprawling Excel-formula port that pulls in dependencies. finlytic
+aims for the middle: a focused, dependency-free toolkit — time value of money,
+loans, bonds (including duration and convexity), dated cash flows, depreciation,
+and day-count conventions — that ships first-class types and spreadsheet-matching
+results.
+
+| | **finlytic** | [financejs](https://www.npmjs.com/package/financejs) | [@formulajs/formulajs](https://www.npmjs.com/package/@formulajs/formulajs) |
+| --- | --- | --- | --- |
+| Dependencies | **0** | 0 | 2 |
+| Ships TypeScript types | **Yes** | No | Yes |
+| Scope | focused finance toolkit (TVM, loans, bonds, dated flows, depreciation, day-count) | core TVM & loans | broad Excel-formula port (finance, stats, text, dates) |
+
+If you want a complete Excel-formula layer, formulajs is excellent. If you want a
+small, typed, dependency-free library for the financial calculations themselves —
+including the bond analytics most packages skip — that's finlytic.
 
 ## Install
 
