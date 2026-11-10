@@ -6,18 +6,21 @@
 [![types](https://img.shields.io/npm/types/finkit.svg)](./dist/index.d.ts)
 
 Zero-dependency, type-safe **financial math** for TypeScript and JavaScript:
-the time value of money, loan amortization, and interest-rate conversions —
-with the results you'd get from a spreadsheet, the ergonomics you'd want from a
-modern library, and correct handling of the edge cases most implementations get
-wrong.
+the time value of money, loan amortization, bond analytics, depreciation, dated
+cash flows, and more — with the results you'd get from a spreadsheet, the
+ergonomics you'd want from a modern library, and correct handling of the edge
+cases most implementations get wrong.
 
 - **Zero dependencies**, ESM + CJS, fully tree-shakeable.
 - **First-class types** and JSDoc on every function.
 - **Spreadsheet-compatible** results (`PMT`, `FV`, `PV`, `NPER`, `RATE`,
-  `IPMT`, `PPMT`, `NPV`, `IRR`, `EFFECT`, `NOMINAL`).
+  `IPMT`, `PPMT`, `NPV`, `IRR`, `XNPV`, `XIRR`, `MIRR`, `EFFECT`, `NOMINAL`,
+  `SLN`, `SYD`, `DB`, `DDB`).
+- **Bond analytics** most JS libraries leave out: price, yield to maturity,
+  accrued interest, and Macaulay / modified **duration** and **convexity**.
 - **Correct edge cases**: zero-interest loans, annuity-due (begin-of-period)
-  payments, balloon residuals, and amortization schedules that end at exactly
-  zero.
+  payments, balloon residuals, amortization schedules that end at exactly
+  zero, `rate === growth` limits, and time-zone-independent day counts.
 
 ## Install
 
@@ -44,6 +47,24 @@ irr([-1000, 300, 420, 680]); // ≈ 0.163 per period
 
 // A 6% nominal rate compounded monthly is really:
 effectiveRate(0.06, 12); // ≈ 0.0617 (6.17%) effective annual
+```
+
+```ts
+import { xirr, bondPrice, modifiedDuration, sln } from 'finkit';
+
+// Internal rate of return for cash flows on arbitrary dates:
+xirr([
+  { amount: -10000, date: new Date('2024-01-01') },
+  { amount: 6000, date: new Date('2024-06-15') },
+  { amount: 6000, date: new Date('2025-01-10') },
+]); // annual rate that makes the dated NPV zero
+
+// Price an 8% semi-annual bond to yield 10%, and its interest-rate risk:
+bondPrice({ couponRate: 0.08, yearsToMaturity: 10 }, 0.1); // ≈ 87.54
+modifiedDuration({ couponRate: 0.08, yearsToMaturity: 10 }, 0.1); // ≈ 6.51 years
+
+// Straight-line depreciation per year:
+sln(30000, 7500, 10); // 2250
 ```
 
 ## Sign convention
@@ -104,6 +125,70 @@ payment so the balance ends at exactly `residual` (default `0`).
 | --- | --- |
 | `effectiveRate(nominalRate, periodsPerYear)` | effective annual rate |
 | `nominalRate(effectiveAnnualRate, periodsPerYear)` | nominal annual rate |
+
+### Dated cash flows
+
+For cash flows that fall on arbitrary calendar dates, not evenly spaced periods.
+Each flow is `{ amount, date }`; dates are read by their UTC calendar day, so
+results don't shift with the host time zone.
+
+| Function | Returns |
+| --- | --- |
+| `xnpv(rate, cashflows)` | net present value with daily (365-day) discounting |
+| `xirr(cashflows, opts?)` | annual internal rate of return (Excel `XIRR`) |
+
+### Bonds
+
+Priced on a coupon date. A bond is `{ couponRate, yearsToMaturity, faceValue?, frequency? }`
+(`faceValue` defaults to `100`, `frequency` to `2`). Yields are nominal annual
+rates compounded `frequency` times a year.
+
+| Function | Returns |
+| --- | --- |
+| `bondPrice(bond, annualYield)` | clean price |
+| `yieldToMaturity(bond, price, opts?)` | yield to maturity |
+| `macaulayDuration(bond, annualYield)` | Macaulay duration (years) |
+| `modifiedDuration(bond, annualYield)` | modified duration (years) |
+| `convexity(bond, annualYield)` | convexity (years²) |
+| `accruedInterest(params)` | interest accrued to a settlement date |
+
+### Depreciation
+
+| Function | Returns |
+| --- | --- |
+| `sln(cost, salvage, life)` | straight-line charge per period |
+| `syd(cost, salvage, life, period)` | sum-of-years'-digits charge |
+| `ddb(cost, salvage, life, period, factor?)` | declining-balance charge (`factor` default `2`) |
+| `db(cost, salvage, life, period, month?)` | fixed-declining-balance charge |
+
+### Returns
+
+| Function | Returns |
+| --- | --- |
+| `mirr(cashflows, financeRate, reinvestRate)` | modified internal rate of return |
+| `cagr(beginValue, endValue, years)` | compound annual growth rate |
+| `twr(periods)` | time-weighted return across valuation periods |
+
+### Day-count conventions
+
+| Function | Returns |
+| --- | --- |
+| `yearFraction(start, end, convention?)` | year fraction between two dates |
+
+`convention` is one of `'30/360'`, `'30E/360'`, `'ACT/360'`, `'ACT/365'`
+(default), or `'ACT/ACT'`.
+
+### Perpetuities & growing annuities
+
+These use the natural textbook sign convention: a positive payment stream has a
+positive present value. The first payment occurs one period from now.
+
+| Function | Returns |
+| --- | --- |
+| `pvPerpetuity(payment, rate, due?)` | present value of a level perpetuity |
+| `pvGrowingPerpetuity(payment, rate, growth)` | Gordon-growth present value |
+| `pvGrowingAnnuity(payment, rate, growth, nper)` | present value of a growing annuity |
+| `fvGrowingAnnuity(payment, rate, growth, nper)` | future value of a growing annuity |
 
 ## A note on precision
 
