@@ -20,10 +20,10 @@ export function mirr(
   assertFinite(financeRate, 'financeRate');
   assertFinite(reinvestRate, 'reinvestRate');
   if (cashflows.length < 2) {
-    throw new RangeError('finkit: "cashflows" must have at least two entries');
+    throw new RangeError('finlytic: "cashflows" must have at least two entries');
   }
   if (financeRate <= -1 || reinvestRate <= -1) {
-    throw new RangeError('finkit: rates must be greater than -1');
+    throw new RangeError('finlytic: rates must be greater than -1');
   }
 
   const n = cashflows.length - 1;
@@ -43,7 +43,7 @@ export function mirr(
     }
   }
   if (!hasPos || !hasNeg) {
-    throw new RangeError('finkit: "cashflows" must contain at least one positive and one negative value');
+    throw new RangeError('finlytic: "cashflows" must contain at least one positive and one negative value');
   }
 
   return Math.pow(-fvInflows / pvOutflows, 1 / n) - 1;
@@ -62,10 +62,10 @@ export function cagr(beginValue: number, endValue: number, years: number): numbe
   assertFinite(endValue, 'endValue');
   assertFinite(years, 'years');
   if (beginValue <= 0 || endValue <= 0) {
-    throw new RangeError('finkit: "beginValue" and "endValue" must be positive');
+    throw new RangeError('finlytic: "beginValue" and "endValue" must be positive');
   }
   if (years <= 0) {
-    throw new RangeError('finkit: "years" must be positive');
+    throw new RangeError('finlytic: "years" must be positive');
   }
   return Math.pow(endValue / beginValue, 1 / years) - 1;
 }
@@ -101,7 +101,7 @@ export interface ValuationPeriod {
  */
 export function twr(periods: readonly ValuationPeriod[]): number {
   if (periods.length === 0) {
-    throw new RangeError('finkit: "periods" must not be empty');
+    throw new RangeError('finlytic: "periods" must not be empty');
   }
 
   let product = 1;
@@ -115,12 +115,12 @@ export function twr(periods: readonly ValuationPeriod[]): number {
     if (flowTiming === 'start') {
       const base = startValue + flow;
       if (base === 0) {
-        throw new RangeError(`finkit: periods[${k}] has zero capital at risk`);
+        throw new RangeError(`finlytic: periods[${k}] has zero capital at risk`);
       }
       growth = endValue / base;
     } else {
       if (startValue === 0) {
-        throw new RangeError(`finkit: periods[${k}] has zero starting value`);
+        throw new RangeError(`finlytic: periods[${k}] has zero starting value`);
       }
       growth = (endValue - flow) / startValue;
     }

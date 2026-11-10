@@ -6,7 +6,7 @@ import {
 } from './internal';
 
 /**
- * finkit uses the standard cash-flow sign convention (the same as a financial
+ * finlytic uses the standard cash-flow sign convention (the same as a financial
  * calculator or a spreadsheet): money you **receive** is positive and money you
  * **pay out** is negative. So the payment on a loan you took out is negative,
  * and the present value of money you borrowed is positive.
@@ -109,7 +109,7 @@ export function nper(rate: number, pmt: number, pv: number, opts: TvmOptions = {
   const type = dueFactor(opts.due);
   if (rate === 0) {
     if (pmt === 0) {
-      throw new RangeError('finkit: "pmt" cannot be 0 when "rate" is 0');
+      throw new RangeError('finlytic: "pmt" cannot be 0 when "rate" is 0');
     }
     return -(pv + fvVal) / pmt;
   }
@@ -172,7 +172,7 @@ export function rate(nper: number, pmt: number, pv: number, opts: RateOptions = 
   }
 
   if (!Number.isFinite(r) || Math.abs(f(r)) > 1e-6) {
-    throw new RangeError('finkit: "rate" did not converge — try a different "guess"');
+    throw new RangeError('finlytic: "rate" did not converge — try a different "guess"');
   }
   return r;
 }

@@ -49,7 +49,7 @@ export function amortizationSchedule(params: AmortizationParams): AmortizationRo
   assertPositiveInt(nper, 'nper');
   assertFinite(residual, 'residual');
   if (principal <= 0) {
-    throw new RangeError(`finkit: "principal" must be positive, received ${principal}`);
+    throw new RangeError(`finlytic: "principal" must be positive, received ${principal}`);
   }
 
   const opts = { fv: -residual, due };

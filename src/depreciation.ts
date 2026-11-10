@@ -4,9 +4,9 @@ function assertDepreciationInputs(cost: number, salvage: number, life: number): 
   assertFinite(cost, 'cost');
   assertFinite(salvage, 'salvage');
   assertFinite(life, 'life');
-  if (cost < 0) throw new RangeError('finkit: "cost" must not be negative');
-  if (salvage < 0) throw new RangeError('finkit: "salvage" must not be negative');
-  if (life <= 0) throw new RangeError('finkit: "life" must be positive');
+  if (cost < 0) throw new RangeError('finlytic: "cost" must not be negative');
+  if (salvage < 0) throw new RangeError('finlytic: "salvage" must not be negative');
+  if (life <= 0) throw new RangeError('finlytic: "life" must be positive');
 }
 
 /**
@@ -34,7 +34,7 @@ export function syd(cost: number, salvage: number, life: number, period: number)
   assertDepreciationInputs(cost, salvage, life);
   assertPositiveInt(period, 'period');
   if (period > life) {
-    throw new RangeError('finkit: "period" must not exceed "life"');
+    throw new RangeError('finlytic: "period" must not exceed "life"');
   }
   return ((cost - salvage) * (life - period + 1) * 2) / (life * (life + 1));
 }
@@ -59,7 +59,7 @@ export function ddb(
   assertDepreciationInputs(cost, salvage, life);
   assertPositiveInt(period, 'period');
   assertFinite(factor, 'factor');
-  if (factor <= 0) throw new RangeError('finkit: "factor" must be positive');
+  if (factor <= 0) throw new RangeError('finlytic: "factor" must be positive');
 
   const rate = factor / life;
   let accumulated = 0;
@@ -96,7 +96,7 @@ export function db(
   assertPositiveInt(period, 'period');
   assertFinite(month, 'month');
   if (month < 1 || month > 12) {
-    throw new RangeError('finkit: "month" must be between 1 and 12');
+    throw new RangeError('finlytic: "month" must be between 1 and 12');
   }
   if (cost === 0) return 0;
 
@@ -104,7 +104,7 @@ export function db(
   const rate = Math.round((1 - Math.pow(salvage / cost, 1 / life)) * 1000) / 1000;
   const lastPeriod = month === 12 ? life : life + 1;
   if (period > lastPeriod) {
-    throw new RangeError('finkit: "period" is beyond the depreciation schedule');
+    throw new RangeError('finlytic: "period" is beyond the depreciation schedule');
   }
 
   let accumulated = 0;

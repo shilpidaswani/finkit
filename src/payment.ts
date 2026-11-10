@@ -3,7 +3,7 @@ import { pmt, fv } from './annuity';
 
 function assertPeriodInRange(per: number, nper: number): void {
   if (!Number.isInteger(per) || per < 1 || per > nper) {
-    throw new RangeError(`finkit: "per" must be an integer in 1..${nper}, received ${per}`);
+    throw new RangeError(`finlytic: "per" must be an integer in 1..${nper}, received ${per}`);
   }
 }
 
@@ -58,7 +58,7 @@ function assertSpan(start: number, end: number, nper: number): void {
   assertPeriodInRange(start, nper);
   assertPeriodInRange(end, nper);
   if (end < start) {
-    throw new RangeError(`finkit: "end" (${end}) must be >= "start" (${start})`);
+    throw new RangeError(`finlytic: "end" (${end}) must be >= "start" (${start})`);
   }
 }
 

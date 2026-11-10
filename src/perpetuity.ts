@@ -15,7 +15,7 @@ export function pvPerpetuity(payment: number, rate: number, due: PaymentDue = 'e
   assertFinite(payment, 'payment');
   assertFinite(rate, 'rate');
   if (rate <= 0) {
-    throw new RangeError('finkit: "rate" must be positive for a perpetuity to converge');
+    throw new RangeError('finlytic: "rate" must be positive for a perpetuity to converge');
   }
   const base = payment / rate;
   return base * (1 + rate * dueFactor(due));
@@ -34,7 +34,7 @@ export function pvGrowingPerpetuity(payment: number, rate: number, growth: numbe
   assertFinite(rate, 'rate');
   assertFinite(growth, 'growth');
   if (rate <= growth) {
-    throw new RangeError('finkit: a growing perpetuity requires "rate" > "growth"');
+    throw new RangeError('finlytic: a growing perpetuity requires "rate" > "growth"');
   }
   return payment / (rate - growth);
 }
@@ -59,7 +59,7 @@ export function pvGrowingAnnuity(
   assertFinite(growth, 'growth');
   assertPositiveInt(nper, 'nper');
   if (rate <= -1 || growth <= -1) {
-    throw new RangeError('finkit: "rate" and "growth" must be greater than -1');
+    throw new RangeError('finlytic: "rate" and "growth" must be greater than -1');
   }
 
   if (rate === growth) {
@@ -89,7 +89,7 @@ export function fvGrowingAnnuity(
   assertFinite(growth, 'growth');
   assertPositiveInt(nper, 'nper');
   if (rate <= -1 || growth <= -1) {
-    throw new RangeError('finkit: "rate" and "growth" must be greater than -1');
+    throw new RangeError('finlytic: "rate" and "growth" must be greater than -1');
   }
 
   if (rate === growth) {

@@ -27,13 +27,13 @@ export function dueFactor(due: PaymentDue | undefined): 0 | 1 {
 /** Throw if `value` is not a finite number. */
 export function assertFinite(value: number, name: string): void {
   if (typeof value !== 'number' || !Number.isFinite(value)) {
-    throw new RangeError(`finkit: "${name}" must be a finite number, received ${value}`);
+    throw new RangeError(`finlytic: "${name}" must be a finite number, received ${value}`);
   }
 }
 
 /** Throw if `value` is not a positive integer (periods, counts). */
 export function assertPositiveInt(value: number, name: string): void {
   if (!Number.isInteger(value) || value <= 0) {
-    throw new RangeError(`finkit: "${name}" must be a positive integer, received ${value}`);
+    throw new RangeError(`finlytic: "${name}" must be a positive integer, received ${value}`);
   }
 }

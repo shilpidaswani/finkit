@@ -34,7 +34,7 @@ function actualDays(start: Date, end: Date): number {
 
 function assertValidDate(date: Date, name: string): void {
   if (!(date instanceof Date) || Number.isNaN(date.getTime())) {
-    throw new TypeError(`finkit: "${name}" must be a valid Date`);
+    throw new TypeError(`finlytic: "${name}" must be a valid Date`);
   }
 }
 
@@ -111,7 +111,7 @@ export function yearFraction(
       break;
     default: {
       const exhaustive: never = convention;
-      throw new RangeError(`finkit: unknown day-count convention "${String(exhaustive)}"`);
+      throw new RangeError(`finlytic: unknown day-count convention "${String(exhaustive)}"`);
     }
   }
   assertFinite(result, 'yearFraction');

@@ -15,7 +15,7 @@ import { assertFinite } from './internal';
 export function npv(rate: number, cashflows: readonly number[]): number {
   assertFinite(rate, 'rate');
   if (cashflows.length === 0) {
-    throw new RangeError('finkit: "cashflows" must not be empty');
+    throw new RangeError('finlytic: "cashflows" must not be empty');
   }
   let total = 0;
   for (let i = 0; i < cashflows.length; i++) {
@@ -47,7 +47,7 @@ export interface IrrOptions {
  */
 export function irr(cashflows: readonly number[], opts: IrrOptions = {}): number {
   if (cashflows.length < 2) {
-    throw new RangeError('finkit: "cashflows" must have at least two entries');
+    throw new RangeError('finlytic: "cashflows" must have at least two entries');
   }
   let hasPos = false;
   let hasNeg = false;
@@ -58,7 +58,7 @@ export function irr(cashflows: readonly number[], opts: IrrOptions = {}): number
     if (cf < 0) hasNeg = true;
   }
   if (!hasPos || !hasNeg) {
-    throw new RangeError('finkit: "cashflows" must contain at least one positive and one negative value');
+    throw new RangeError('finlytic: "cashflows" must contain at least one positive and one negative value');
   }
 
   const guess = opts.guess ?? 0.1;
@@ -103,5 +103,5 @@ export function irr(cashflows: readonly number[], opts: IrrOptions = {}): number
     r = next;
   }
 
-  throw new RangeError('finkit: "irr" did not converge — try a different "guess"');
+  throw new RangeError('finlytic: "irr" did not converge — try a different "guess"');
 }

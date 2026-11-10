@@ -1,5 +1,5 @@
 /**
- * finkit — zero-dependency, type-safe financial math for TypeScript.
+ * finlytic — zero-dependency, type-safe financial math for TypeScript.
  *
  * Sign convention: money received is positive, money paid out is negative
  * (the same convention as a financial calculator or spreadsheet).

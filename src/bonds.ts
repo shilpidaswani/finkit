@@ -54,7 +54,7 @@ export function bondPrice(bond: Bond, annualYield: number): number {
   const { face, periods, couponPerPeriod, m } = resolve(bond);
   const i = annualYield / m;
   if (i <= -1) {
-    throw new RangeError('finkit: "annualYield" implies a per-period rate at or below -100%');
+    throw new RangeError('finlytic: "annualYield" implies a per-period rate at or below -100%');
   }
   if (i === 0) {
     return couponPerPeriod * periods + face;
@@ -83,7 +83,7 @@ export interface YieldOptions {
 export function yieldToMaturity(bond: Bond, price: number, opts: YieldOptions = {}): number {
   assertFinite(price, 'price');
   if (price <= 0) {
-    throw new RangeError('finkit: "price" must be positive');
+    throw new RangeError('finlytic: "price" must be positive');
   }
   const { couponRate } = bond;
   const guess = opts.guess ?? (couponRate || 0.05);
@@ -128,7 +128,7 @@ export function yieldToMaturity(bond: Bond, price: number, opts: YieldOptions = 
     return (lo + hi) / 2;
   }
 
-  throw new RangeError('finkit: "yieldToMaturity" did not converge — try a different "guess"');
+  throw new RangeError('finlytic: "yieldToMaturity" did not converge — try a different "guess"');
 }
 
 /**
@@ -143,7 +143,7 @@ export function macaulayDuration(bond: Bond, annualYield: number): number {
   const { face, periods, couponPerPeriod, m } = resolve(bond);
   const i = annualYield / m;
   if (i <= -1) {
-    throw new RangeError('finkit: "annualYield" implies a per-period rate at or below -100%');
+    throw new RangeError('finlytic: "annualYield" implies a per-period rate at or below -100%');
   }
 
   let weightedPeriods = 0;
@@ -185,7 +185,7 @@ export function convexity(bond: Bond, annualYield: number): number {
   const { face, periods, couponPerPeriod, m } = resolve(bond);
   const i = annualYield / m;
   if (i <= -1) {
-    throw new RangeError('finkit: "annualYield" implies a per-period rate at or below -100%');
+    throw new RangeError('finlytic: "annualYield" implies a per-period rate at or below -100%');
   }
 
   let weighted = 0;
@@ -243,7 +243,7 @@ export function accruedInterest(params: AccruedInterestParams): number {
   const periodFraction = yearFraction(params.lastCoupon, params.settlement, convention);
   const fullPeriod = yearFraction(params.lastCoupon, params.nextCoupon, convention);
   if (fullPeriod <= 0) {
-    throw new RangeError('finkit: "nextCoupon" must be after "lastCoupon"');
+    throw new RangeError('finlytic: "nextCoupon" must be after "lastCoupon"');
   }
 
   const couponPerPeriod = (params.couponRate * face) / m;

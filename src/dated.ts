@@ -23,7 +23,7 @@ function calendarUTC(date: Date): number {
 
 function normalize(flows: readonly DatedCashFlow[]): { amounts: number[]; years: number[] } {
   if (flows.length < 2) {
-    throw new RangeError('finkit: dated cash flows must have at least two entries');
+    throw new RangeError('finlytic: dated cash flows must have at least two entries');
   }
 
   const amounts: number[] = [];
@@ -31,7 +31,7 @@ function normalize(flows: readonly DatedCashFlow[]): { amounts: number[]; years:
   for (let i = 0; i < flows.length; i++) {
     const flow = flows[i] as DatedCashFlow;
     if (!(flow.date instanceof Date) || Number.isNaN(flow.date.getTime())) {
-      throw new TypeError(`finkit: cash flow ${i} has an invalid "date"`);
+      throw new TypeError(`finlytic: cash flow ${i} has an invalid "date"`);
     }
     assertFinite(flow.amount, `cashflows[${i}].amount`);
     amounts.push(flow.amount);
@@ -63,7 +63,7 @@ function normalize(flows: readonly DatedCashFlow[]): { amounts: number[]; years:
 export function xnpv(rate: number, cashflows: readonly DatedCashFlow[]): number {
   assertFinite(rate, 'rate');
   if (rate <= -1) {
-    throw new RangeError('finkit: "rate" must be greater than -1');
+    throw new RangeError('finlytic: "rate" must be greater than -1');
   }
   const { amounts, years } = normalize(cashflows);
   let total = 0;
@@ -103,7 +103,7 @@ export function xirr(cashflows: readonly DatedCashFlow[], opts: XirrOptions = {}
     if (a < 0) hasNeg = true;
   }
   if (!hasPos || !hasNeg) {
-    throw new RangeError('finkit: dated cash flows must contain at least one positive and one negative value');
+    throw new RangeError('finlytic: dated cash flows must contain at least one positive and one negative value');
   }
 
   const guess = opts.guess ?? 0.1;
@@ -162,5 +162,5 @@ export function xirr(cashflows: readonly DatedCashFlow[], opts: XirrOptions = {}
     return (lo + hi) / 2;
   }
 
-  throw new RangeError('finkit: "xirr" did not converge — try a different "guess"');
+  throw new RangeError('finlytic: "xirr" did not converge — try a different "guess"');
 }

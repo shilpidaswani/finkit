@@ -1,5 +1,5 @@
 {
-  "name": "finkit",
+  "name": "finlytic",
   "version": "0.2.0",
   "description": "Zero-dependency, type-safe financial math for TypeScript: time value of money, loan amortization, bond analytics, depreciation, dated cash flows, and more.",
   "type": "module",
@@ -51,6 +51,15 @@
     "typescript"
   ],
   "license": "MIT",
+  "author": "Shilpi Daswani",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shilpidaswani/finkit.git"
+  },
+  "homepage": "https://github.com/shilpidaswani/finkit#readme",
+  "bugs": {
+    "url": "https://github.com/shilpidaswani/finkit/issues"
+  },
   "sideEffectsNote": "pure functions only",
   "engines": {
     "node": ">=18"

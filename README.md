@@ -1,9 +1,9 @@
-# finkit
+# finlytic
 
-[![npm version](https://img.shields.io/npm/v/finkit.svg)](https://www.npmjs.com/package/finkit)
+[![npm version](https://img.shields.io/npm/v/finlytic.svg)](https://www.npmjs.com/package/finlytic)
 [![CI](https://github.com/shilpidaswani/finkit/actions/workflows/ci.yml/badge.svg)](https://github.com/shilpidaswani/finkit/actions/workflows/ci.yml)
-[![license](https://img.shields.io/npm/l/finkit.svg)](./LICENSE)
-[![types](https://img.shields.io/npm/types/finkit.svg)](./dist/index.d.ts)
+[![license](https://img.shields.io/npm/l/finlytic.svg)](./LICENSE)
+[![types](https://img.shields.io/npm/types/finlytic.svg)](./dist/index.d.ts)
 
 Zero-dependency, type-safe **financial math** for TypeScript and JavaScript:
 the time value of money, loan amortization, bond analytics, depreciation, dated
@@ -25,13 +25,13 @@ cases most implementations get wrong.
 ## Install
 
 ```sh
-npm install finkit
+npm install finlytic
 ```
 
 ## Quick start
 
 ```ts
-import { pmt, amortizationSchedule, irr, effectiveRate } from 'finkit';
+import { pmt, amortizationSchedule, irr, effectiveRate } from 'finlytic';
 
 // Monthly payment on a 200,000 loan at 6% annual for 30 years:
 pmt(0.06 / 12, 360, 200000); // -1199.10  (negative: money paid out)
@@ -50,7 +50,7 @@ effectiveRate(0.06, 12); // ≈ 0.0617 (6.17%) effective annual
 ```
 
 ```ts
-import { xirr, bondPrice, modifiedDuration, sln } from 'finkit';
+import { xirr, bondPrice, modifiedDuration, sln } from 'finlytic';
 
 // Internal rate of return for cash flows on arbitrary dates:
 xirr([
@@ -69,7 +69,7 @@ sln(30000, 7500, 10); // 2250
 
 ## Sign convention
 
-finkit uses the same cash-flow sign convention as a financial calculator or a
+finlytic uses the same cash-flow sign convention as a financial calculator or a
 spreadsheet: **money you receive is positive, money you pay out is negative.**
 So the payment on a loan you took out is negative, while the amount you borrowed
 (its present value) is positive.
@@ -192,7 +192,7 @@ positive present value. The first payment occurs one period from now.
 
 ## A note on precision
 
-Like a spreadsheet, finkit computes in IEEE-754 double-precision floating point.
+Like a spreadsheet, finlytic computes in IEEE-754 double-precision floating point.
 That's correct to well beyond cent precision for ordinary use, but if you are
 settling money you should round results to your currency's smallest unit at the
 point of display or payment, and avoid comparing raw floats for equality.
