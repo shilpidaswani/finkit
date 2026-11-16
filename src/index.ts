@@ -49,3 +49,5 @@ export {
   pvGrowingAnnuity,
   fvGrowingAnnuity,
 } from './perpetuity';
+
+export { paybackPeriod, discountedPaybackPeriod, profitabilityIndex } from './capital';

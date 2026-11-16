@@ -191,6 +191,16 @@ rates compounded `frequency` times a year.
 | `cagr(beginValue, endValue, years)` | compound annual growth rate |
 | `twr(periods)` | time-weighted return across valuation periods |
 
+### Capital budgeting
+
+`cashflows[0]` is the time-0 outlay (usually negative), later flows one period apart.
+
+| Function | Returns |
+| --- | --- |
+| `paybackPeriod(cashflows)` | periods to recover the outlay (undiscounted, fractional) |
+| `discountedPaybackPeriod(rate, cashflows)` | payback using present values |
+| `profitabilityIndex(rate, cashflows)` | PV of future flows ÷ initial outlay (PI > 1 ⇔ NPV > 0) |
+
 ### Day-count conventions
 
 | Function | Returns |
