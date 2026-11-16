@@ -1,6 +1,6 @@
 {
   "name": "finlytic",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Zero-dependency, type-safe financial math for TypeScript: time value of money, loan amortization, bond analytics, depreciation, dated cash flows, and more.",
   "type": "module",
   "sideEffects": false,
@@ -48,6 +48,9 @@
     "day-count",
     "mirr",
     "cagr",
+    "capital-budgeting",
+    "payback-period",
+    "profitability-index",
     "typescript"
   ],
   "license": "MIT",
